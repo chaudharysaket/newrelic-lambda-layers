@@ -24,11 +24,9 @@ jobs:
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                 AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
               run: |
-                echo $AWS_ACCESS_KEY_ID
-                echo $AWS_SECRET_ACCESS_KEY
-                echo $AWS_SESSION_TOKEN
                 aws sts get-caller-identity
                 cd python
+                aws sts get-caller-identity
                 ./publish-layers.sh python3.7
     
     # publish-python38:
