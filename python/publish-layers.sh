@@ -292,6 +292,7 @@ case "$1" in
     "python3.7")
         build-python37-x86
         publish-python37-x86
+        build-docker-x86
         ;;
     # "python3.8")
     #     build-python38-arm64
