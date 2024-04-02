@@ -29,7 +29,7 @@ function build-python37-x86 {
     echo "Building New Relic layer for python3.7 (x86_64)"
     rm -rf $BUILD_DIR $PY37_DIST_X86_64
     mkdir -p $DIST_DIR
-    pip install --no-cache-dir -qU newrelic newrelic-lambda -t $BUILD_DIR/lib/python3.7/site-packages
+    pip3 install --no-cache-dir -qU newrelic newrelic-lambda -t $BUILD_DIR/lib/python3.7/site-packages
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.7/site-packages/newrelic_lambda_wrapper.py
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
     download_extension x86_64
@@ -293,36 +293,36 @@ case "$1" in
         build-python37-x86
         publish-python37-x86
         ;;
-    "python3.8")
-        build-python38-arm64
-        publish-python38-arm64
-        build-python38-x86
-        publish-python38-x86
-        ;;
-    "python3.9")
-        build-python39-arm64
-        publish-python39-arm64
-        build-python39-x86
-        publish-python39-x86
-        ;;
-    "python3.10")
-        build-python310-arm64
-        publish-python310-arm64
-        build-python310-x86
-        publish-python310-x86
-        ;;
-    "python3.11")
-        build-python311-arm64
-        publish-python311-arm64
-        build-python311-x86
-        publish-python311-x86
-        ;;
-    "python3.12")
-        build-python312-arm64
-        publish-python312-arm64
-        build-python312-x86
-        publish-python312-x86
-        ;;
+    # "python3.8")
+    #     build-python38-arm64
+    #     publish-python38-arm64
+    #     build-python38-x86
+    #     publish-python38-x86
+    #     ;;
+    # "python3.9")
+    #     build-python39-arm64
+    #     publish-python39-arm64
+    #     build-python39-x86
+    #     publish-python39-x86
+    #     ;;
+    # "python3.10")
+    #     build-python310-arm64
+    #     publish-python310-arm64
+    #     build-python310-x86
+    #     publish-python310-x86
+    #     ;;
+    # "python3.11")
+    #     build-python311-arm64
+    #     publish-python311-arm64
+    #     build-python311-x86
+    #     publish-python311-x86
+    #     ;;
+    # "python3.12")
+    #     build-python312-arm64
+    #     publish-python312-arm64
+    #     build-python312-x86
+    #     publish-python312-x86
+    #     ;;
     *)
         usage
         ;;
