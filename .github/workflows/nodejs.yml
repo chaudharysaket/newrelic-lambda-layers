@@ -9,6 +9,9 @@ on:
         paths:
             - 'nodejs/**'
     workflow_dispatch:
+        branches: [master]
+        paths:
+          - 'nodejs/**'
 
 jobs:
 
