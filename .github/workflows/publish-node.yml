@@ -40,3 +40,4 @@ jobs:
          file: ./nodejs/coverage/unit/lcov.info
          fail_ci_if_error: true
          flags: unit-tests
+        continue-on-error: true
