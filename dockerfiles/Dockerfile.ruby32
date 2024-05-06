@@ -10,7 +10,9 @@ RUN apt install -y curl python3 python3-pip unzip zip
 RUN useradd -m newrelic-lambda-layers
 USER newrelic-lambda-layers
 WORKDIR /home/newrelic-lambda-layers
-RUN pip3 install --user awscli 
+
+RUN python3 -m venv awscli-venv
+RUN . awscli-venv/bin/activate && pip install awscli
 
 # Ruby layer building depends on the shared `libBuild.sh` script but is
 # otherwise independent. Copy over only what we need to build Ruby layers.
