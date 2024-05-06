@@ -11,16 +11,19 @@ RUN useradd -m newrelic-lambda-layers
 USER newrelic-lambda-layers
 WORKDIR /home/newrelic-lambda-layers
 
+# Create a virtual environment for the AWS CLI and install it
+RUN python3 -m venv awscli-venv
+RUN . awscli-venv/bin/activate && pip install awscli
+
+# Set the PATH to include the virtual environment's bin directory
+ENV PATH="/home/newrelic-lambda-layers/awscli-venv/bin:$PATH"
+
 # Ruby layer building depends on the shared `libBuild.sh` script but is
 # otherwise independent. Copy over only what we need to build Ruby layers.
 COPY --chown=newrelic-lambda-layers libBuild.sh .
 COPY --chown=newrelic-lambda-layers ruby ruby/
 
 WORKDIR ruby
-
-
-RUN python3 -m venv awscli-venv
-RUN . awscli-venv/bin/activate && pip install awscli
 
 # Run ruby/bin/clean just in case Docker is being ran from a developer's
 # workstation and their git clone directory has some stray files that could
