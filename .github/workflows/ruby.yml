@@ -9,9 +9,6 @@ on:
         paths:
             - 'ruby/**'
     workflow_dispatch:
-      branches: [master]
-      paths:
-        - 'ruby/**'
 
 jobs:
 
