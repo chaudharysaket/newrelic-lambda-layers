@@ -6,7 +6,7 @@ on:
       - v**_ruby
 
 jobs:
-  publish-node:
+  publish-ruby:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,4 +32,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: make publish-ruby${{ matrix.ruby-version }}-ci
+        run: |
+          RUBY_VERSION=${{ matrix.ruby-version }}
+          RUBY_VERSION=${RUBY_VERSION//./}  
+          make publish-ruby$RUBY_VERSION-ci
