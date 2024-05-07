@@ -68,11 +68,11 @@ function list_all_regions {
       --query "Regions[].{Name:RegionName}" \
       --output text | sort
 }
-
+# https://github.com/chaudharysaket/newrelic-lambda-extension/releases/download/v1.1.0/newrelic-lambda-extension.arm64.zip
 function fetch_extension {
     arch=$1
 
-    url="https://github.com/newrelic/newrelic-lambda-extension/releases/download/v${EXTENSION_VERSION}/newrelic-lambda-extension.${arch}.zip"
+    url="https://github.com/chaudharysaket/newrelic-lambda-extension/releases/download/v1.1.0/newrelic-lambda-extension.${arch}.zip"
     rm -rf $EXTENSION_DIST_DIR $EXTENSION_DIST_ZIP
     curl -L $url -o $EXTENSION_DIST_ZIP
 }
