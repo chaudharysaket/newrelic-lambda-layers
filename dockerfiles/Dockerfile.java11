@@ -8,6 +8,7 @@ USER newrelic-lambda-layers
 WORKDIR /home/newrelic-lambda-layers
 
 COPY --chown=newrelic-lambda-layers libBuild.sh .
+COPY --chown=newrelic-lambda-layers Dockerfile .
 COPY --chown=newrelic-lambda-layers java java/
 
 WORKDIR java
