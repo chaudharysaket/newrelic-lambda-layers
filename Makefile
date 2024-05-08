@@ -85,6 +85,7 @@ publish-nodejs16x-ci: build-nodejs16x
 	docker run \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
+		-v /var/run/docker.sock:/var/run/docker.sock -it \
 		newrelic-lambda-layers-nodejs16x
 
 publish-nodejs16x-local: build-nodejs16x
@@ -104,6 +105,7 @@ publish-nodejs18x-ci: build-nodejs18x
 	docker run \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
+		-v /var/run/docker.sock:/var/run/docker.sock -it \
 		newrelic-lambda-layers-nodejs18x
 
 publish-nodejs18x-local: build-nodejs18x
@@ -123,6 +125,7 @@ publish-nodejs20x-ci: build-nodejs20x
 	docker run \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
+		-v /var/run/docker.sock:/var/run/docker.sock -it \
 		newrelic-lambda-layers-nodejs20x
 
 publish-nodejs20x-local: build-nodejs20x
