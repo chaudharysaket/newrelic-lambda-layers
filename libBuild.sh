@@ -24,7 +24,7 @@ REGIONS_ARM=(
 	us-east-1
 	# us-east-2
 	# us-west-1
-	us-west-2
+	# us-west-2
 )
 
 REGIONS_X86=(
@@ -53,7 +53,7 @@ REGIONS_X86=(
   us-east-1
   # us-east-2
   # us-west-1
-  us-west-2
+  # us-west-2
 )
 
 EXTENSION_DIST_DIR=extensions
@@ -314,4 +314,27 @@ function publish_docker_ecr {
 
     # delete dockerfile
     rm -rf Dockerfile.ecrImage
+}
+
+function publish_docker_hub {
+    layer_archive=$1
+    runtime_name=$2
+    arch=$3
+    if [[ ${arch} =~ 'arm64' ]];
+    then arch_flag="-arm64"
+    else arch_flag=""
+    fi
+    version_flag=$(echo "$runtime_name" | sed 's/[^0-9]//g')
+    language_flag=$(echo "$runtime_name" | sed 's/[0-9].*//')
+    # Remove 'dist/' prefix
+    if [[ $layer_archive == dist/* ]]; then
+      file_without_dist="${layer_archive#dist/}"
+      echo "File without 'dist/': $file_without_dist"
+    else
+      file_without_dist=$layer_archive
+      echo "File does not start with 'dist/': $file_without_dist"
+    fi
+    docker build -t $language_flag:${version_flag[$index]} --build-arg docker_arn=${arns[$index]} .
+    docker tag $language_flag:${version_flag[$index]} newrelic/newrelic-lambda-layers:$language_flag-${version_flag[$index]}
+    docker push newrelic/newrelic-lambda-layers:$language_flag-${version_flag[$index]}
 }
