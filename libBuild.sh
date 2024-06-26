@@ -334,7 +334,8 @@ function publish_docker_hub {
       file_without_dist=$layer_archive
       echo "File does not start with 'dist/': $file_without_dist"
     fi
-    docker build -t $language_flag:${version_flag[$index]} --build-arg docker_arn=${arns[$index]} .
-    docker tag $language_flag:${version_flag[$index]} newrelic/newrelic-lambda-layers:$language_flag-${version_flag[$index]}
-    docker push newrelic/newrelic-lambda-layers:$language_flag-${version_flag[$index]}
+    echo "docker build -t $language_flag:${version_flag} --build-arg docker_arn=${arns} ."
+    docker build -t $language_flag:${version_flag} --build-arg docker_arn=${arns} .
+    docker tag $language_flag:${version_flag} newrelic/newrelic-lambda-layers:$language_flag-${version_flag}
+    docker push newrelic/newrelic-lambda-layers:$language_flag-${version_flag}
 }
