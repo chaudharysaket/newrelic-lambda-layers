@@ -119,9 +119,6 @@ function layer_name_str() {
     "python3.12")
       rt_part="Python312"
       ;;
-    "nodejs16.x")
-      rt_part="NodeJS16X"
-      ;;
     "nodejs18.x")
       rt_part="NodeJS18X"
       ;;
@@ -178,9 +175,6 @@ function s3_prefix() {
       ;;
     "python3.12")
       name="nr-python3.12"
-      ;;
-    "nodejs16.x")
-      name="nr-nodejs16.x"
       ;;
     "nodejs18.x")
       name="nr-nodejs18.x"
@@ -317,32 +311,38 @@ function publish_docker_ecr {
 }
 
 function publish_docker_hub {
-    layer_archive=$1
-    runtime_name=$2
-    arch=$3
-    if [[ ${arch} =~ 'arm64' ]];
-    then arch_flag="-arm64"
-    else arch_flag=""
-    fi
-    version_flag=$(echo "$runtime_name" | sed 's/[^0-9]//g')
-    language_flag=$(echo "$runtime_name" | sed 's/[0-9].*//')
-    # Remove 'dist/' prefix
-    if [[ $layer_archive == dist/* ]]; then
-      file_without_dist="${layer_archive#dist/}"
-      echo "File without 'dist/': $file_without_dist"
-    else
-      file_without_dist=$layer_archive
-      echo "File does not start with 'dist/': $file_without_dist"
-    fi
+  layer_archive=$1
+  runtime_name=$2
+  arch=$3
+  if [[ ${arch} =~ 'arm64' ]];
+  then arch_flag="-arm64"
+  else arch_flag=""
+  fi
+  version_flag=$(echo "$runtime_name" | sed 's/[^0-9]//g')
+  language_flag=$(echo "$runtime_name" | sed 's/[0-9].*//')
+  # Remove 'dist/' prefix
+  if [[ $layer_archive == dist/* ]]; then
+    file_without_dist="${layer_archive#dist/}"
+    echo "File without 'dist/': $file_without_dist"
+  else
+    file_without_dist=$layer_archive
+    echo "File does not start with 'dist/': $file_without_dist"
+  fi
 
-    echo "docker build -t $language_flag:${version_flag} \
-    --build-arg layer_zip=${layer_archive} \
-    --build-arg file_without_dist=${file_without_dist} \
-    ."
-    docker build -t $language_flag:${version_flag} \
-    --build-arg layer_zip=${layer_archive} \
-    --build-arg file_without_dist=${file_without_dist} \
-    .
-    docker tag $language_flag:${version_flag} newrelic/newrelic-lambda-layers:$language_flag-${version_flag}
-    docker push newrelic/newrelic-lambda-layers:$language_flag-${version_flag}
+  # copy dockerfile
+  cp ../Dockerfile.ecrImage .
+  echo "docker build -t ${language_flag}-${version_flag}${arch_flag}:latest \
+  -f Dockerfile.ecrImage \
+  --build-arg layer_zip=${layer_archive} \
+  --build-arg file_without_dist=${file_without_dist} \
+  ."
+  docker build -t ${language_flag}-${version_flag}${arch_flag}:latest \
+  -f Dockerfile.ecrImage \
+  --build-arg layer_zip=${layer_archive} \
+  --build-arg file_without_dist=${file_without_dist} \
+  .
+  echo "docker tag ${language_flag}-${version_flag}${arch_flag}:latest newrelic/newrelic-lambda-layers:${language_flag}-${version_flag}${arch_flag}"
+  docker tag ${language_flag}-${version_flag}${arch_flag}:latest newrelic/newrelic-lambda-layers:${language_flag}-${version_flag}${arch_flag}
+  echo "docker push newrelic/newrelic-lambda-layers:${language_flag}-${version_flag}${arch_flag}"
+  docker push newrelic/newrelic-lambda-layers:${language_flag}-${version_flag}${arch_flag}
 }
