@@ -52,4 +52,5 @@ publish-layer-x86
 publish_docker_ecr $EXTENSION_DIST_ZIP_X86_64 extension x86_64
 
 build-layer-arm64
-publish-layer-arm64 $EXTENSION_DIST_ZIP_ARM64 extension arm64
+publish-layer-arm64
+publish_docker_ecr $EXTENSION_DIST_ZIP_ARM64 extension arm64
