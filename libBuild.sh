@@ -275,7 +275,7 @@ function publish_docker_ecr {
 
     if [[ ${runtime_name} =~ 'dotnet' ]]; then
     version_flag=""
-    arch_flag=arch
+    arch_flag=${arch}
     fi
 
     # Remove 'dist/' prefix
