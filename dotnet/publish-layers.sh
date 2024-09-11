@@ -37,6 +37,7 @@ function publish-dotnet-x86-64 {
     for region in "${REGIONS_X86[@]}"; do
       publish_layer $DOTNET_DIST_X86_64 $region dotnet x86_64
     done
+
     publish_docker_ecr $DOTNET_DIST_X86_64 dotnet x86_64
 }
 
@@ -61,6 +62,7 @@ function publish-dotnet-arm64 {
     for region in "${REGIONS_ARM[@]}"; do
       publish_layer $DOTNET_DIST_ARM64 $region dotnet arm64
     done
+
     publish_docker_ecr $DOTNET_DIST_ARM64 dotnet arm64
 }
 
