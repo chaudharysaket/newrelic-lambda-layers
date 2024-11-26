@@ -280,7 +280,7 @@ function build-python313-arm64 {
     echo "Building New Relic layer for python3.13 (arm64)"
     rm -rf $BUILD_DIR $PY313_DIST_ARM64
     mkdir -p $DIST_DIR
-    pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.12/site-packages
+    pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.13/site-packages
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
