@@ -242,11 +242,14 @@ function publish_layer {
    else arch_flag=""
    fi
 
+   agent_tag=$(basename "$GITHUB_REF")
+   echo "Github 1 (basename): $tag1"
+
     echo "Publishing ${runtime_name} layer to ${region}"
     layer_version=$(aws lambda publish-layer-version \
       --layer-name ${layer_name} \
       --content "S3Bucket=${bucket_name},S3Key=${s3_key}" \
-      --description "New Relic Layer for ${runtime_name} (${arch})" \
+      --description "New Relic Layer for ${runtime_name} (${arch}). Extension v$EXTENSION_VERSION  New Relic Agent v${agent_tag}" \
       --license-info "Apache-2.0" $arch_flag \
       --compatible-runtimes ${compat_list[*]} \
       --region "$region" \
