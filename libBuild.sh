@@ -212,6 +212,16 @@ function hash_file() {
     fi
 }
 
+function get_agent_version() {
+  local agent_tag=$(basename "$GITHUB_REF")
+  local agent_version_str="${agent_tag#v}"
+  local agent_version="${agent_version_str%%_*}"
+  
+  local IFS='.'
+  read -r major minor patch <<< "$agent_version"
+  printf "v%s.%s.%s" "$major" "$minor" "$patch"
+}
+
 function publish_layer {
     layer_archive=$1
     region=$2
@@ -249,7 +259,7 @@ function publish_layer {
     layer_version=$(aws lambda publish-layer-version \
       --layer-name ${layer_name} \
       --content "S3Bucket=${bucket_name},S3Key=${s3_key}" \
-      --description "New Relic Layer for ${runtime_name} (${arch}). Extension v$EXTENSION_VERSION  New Relic Agent v${agent_tag}" \
+      --description "New Relic Layer for ${runtime_name} (${arch}). Extension v$EXTENSION_VERSION  New Relic Agent v${get_agent_version()}" \
       --license-info "Apache-2.0" $arch_flag \
       --compatible-runtimes ${compat_list[*]} \
       --region "$region" \
