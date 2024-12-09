@@ -243,7 +243,7 @@ function publish_layer {
    fi
 
    agent_tag=$(basename "$GITHUB_REF")
-   echo "Github 1 (basename): $tag1"
+   echo "Github 1 (basename): $agent_tag"
 
     echo "Publishing ${runtime_name} layer to ${region}"
     layer_version=$(aws lambda publish-layer-version \
