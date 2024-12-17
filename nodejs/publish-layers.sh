@@ -117,27 +117,30 @@ function publish-nodejs20x-x86 {
 
 function build-nodejs22x-arm64 {
 	echo "Building new relic layer for nodejs22.x (arm64)"
-	rm -rf $BUILD_DIR $NJS22X_DIST_ARM64
+	# rm -rf $BUILD_DIR $NJS22X_DIST_ARM64
+	rm -rf $NJS22X_DIST_ARM64
 	mkdir -p $DIST_DIR
-	npm install --prefix $BUILD_DIR newrelic@latest
+	# npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	download_extension arm64
 	zip -rq $NJS22X_DIST_ARM64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
-	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
+	rm -rf  $EXTENSION_DIST_PREVIEW_FILE
 	echo "Build complete: ${NJS22X_DIST_ARM64}"
 }
 
 function build-nodejs22x-x86 {
 	echo "Building new relic layer for nodejs22.x (x86_64)"
-	rm -rf $BUILD_DIR $NJS22X_DIST_X86_64
+	# rm -rf $BUILD_DIR $NJS22X_DIST_X86_64
+	rm -rf  $NJS22X_DIST_X86_64
+
 	mkdir -p $DIST_DIR
-	npm install --prefix $BUILD_DIR newrelic@latest
+	# npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	download_extension x86_64
 	zip -rq $NJS22X_DIST_X86_64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
-	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
+	rm -rf  $EXTENSION_DIST_PREVIEW_FILE
 	echo "Build complete: ${NJS22X_DIST_X86_64}"
 }
 
@@ -182,7 +185,7 @@ case "$1" in
 	;;
 "build-nodejs22x")
 	build-nodejs22x-arm64
-	build-nodejs22x-x86
+	# build-nodejs22x-x86
 	;;
 "publish-nodejs22x")
 	publish-nodejs22x-arm64
