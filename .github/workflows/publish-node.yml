@@ -26,29 +26,29 @@ jobs:
       - name: Run Node ${{ matrix.node-version }} unit tests
         if: steps.node-check-tag.outputs.match == 'true'
         run: cd nodejs && npm ci && npm run test
-      - name: Publish layer
-        if: steps.node-check-tag.outputs.match == 'true'
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: make publish-nodejs${{ matrix.node-version }}x-ci
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64, amd64
-      - name: Publish ECR image for nodejs${{ matrix.node-version }}
-        if: steps.node-check-tag.outputs.match == 'true'
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cd nodejs
-          ./publish-layers.sh build-publish-nodejs${{ matrix.node-version }}x-ecr-image
       - name: Upload Unit Test Coverage
         if: steps.node-check-tag.outputs.match == 'true'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5.3.1
         with:
          token: ${{ secrets.CODECOV_TOKEN }}
-         file: ./nodejs/coverage/unit/lcov.info
+         files: ./nodejs/coverage/unit/lcov.info
          fail_ci_if_error: true
          flags: unit-tests
+      # - name: Publish layer
+      #   if: steps.node-check-tag.outputs.match == 'true'
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   run: make publish-nodejs${{ matrix.node-version }}x-ci
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+      #   with:
+      #     platforms: arm64, amd64
+      # - name: Publish ECR image for nodejs${{ matrix.node-version }}
+      #   if: steps.node-check-tag.outputs.match == 'true'
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   run: |
+      #     cd nodejs
+      #     ./publish-layers.sh build-publish-nodejs${{ matrix.node-version }}x-ecr-image
