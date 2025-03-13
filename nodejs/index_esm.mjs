@@ -11,7 +11,7 @@ process.env.NEW_RELIC_TRUSTED_ACCOUNT_KEY =
 if (process.env.LAMBDA_TASK_ROOT && typeof process.env.NEW_RELIC_SERVERLESS_MODE_ENABLED !== 'undefined') {
   delete process.env.NEW_RELIC_SERVERLESS_MODE_ENABLED
 }
-console.log("SAKET WAS HERE")
+
 function getHandlerPath() {
   let handler
   const { NEW_RELIC_LAMBDA_HANDLER } = process.env
