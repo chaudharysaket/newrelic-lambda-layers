@@ -26,6 +26,7 @@ function build-nodejs18x-arm64 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension arm64
 	zip -rq $NJS18X_DIST_ARM64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
@@ -39,6 +40,7 @@ function build-nodejs18x-x86 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension x86_64
 	zip -rq $NJS18X_DIST_X86_64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
@@ -74,6 +76,7 @@ function build-nodejs20x-arm64 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension arm64
 	zip -rq $NJS20X_DIST_ARM64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
@@ -87,6 +90,7 @@ function build-nodejs20x-x86 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension x86_64
 	zip -rq $NJS20X_DIST_X86_64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
@@ -122,6 +126,7 @@ function build-nodejs22x-arm64 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension arm64
 	zip -rq $NJS22X_DIST_ARM64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
@@ -135,6 +140,7 @@ function build-nodejs22x-x86 {
 	npm install --prefix $BUILD_DIR newrelic@latest
 	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
 	cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+	cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
 	download_extension x86_64
 	zip -rq $NJS22X_DIST_X86_64 $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 	rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
