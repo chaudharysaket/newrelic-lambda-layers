@@ -82,6 +82,8 @@ build-nodejs18:
 		.
 
 publish-nodejs18-ci: build-nodejs18
+	pwd
+	ls
 	docker run \
 		--env-file nr-env-var \
 		-e AWS_ACCESS_KEY_ID \
@@ -102,6 +104,8 @@ build-nodejs20:
 		.
 
 publish-nodejs20-ci: build-nodejs20
+	pwd
+	ls
 	docker run \
 		--env-file nr-env-var \
 		-e AWS_ACCESS_KEY_ID \
@@ -122,6 +126,8 @@ build-nodejs22:
 		.
 
 publish-nodejs22-ci: build-nodejs22
+	pwd
+	ls
 	docker run \
 		--env-file nr-env-var \
 		-e AWS_ACCESS_KEY_ID \
