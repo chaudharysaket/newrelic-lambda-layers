@@ -31,10 +31,8 @@ function build_wrapper {
   echo "Installed newrelic package"
   NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
   echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
-  touch /home/runner/work/newrelic-lambda-layers/nr-env-vars/env
-  echo "NEWRELIC_AGENT_VERSION=$NEWRELIC_AGENT_VERSION" > /home/runner/work/newrelic-lambda-layers/nr-env-vars/env
-  pwd
-  ls
+  touch $DIST_DIR/env
+  echo "NEWRELIC_AGENT_VERSION=$NEWRELIC_AGENT_VERSION" > $DIST_DIR/env
   mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
@@ -51,6 +49,7 @@ function publish_wrapper {
   node_version=$1
   arch=$2
   ZIP=$DIST_DIR/nodejs${node_version}x.${arch}.zip
+  source $DIST_DIR/env
   if [ ! -f $ZIP ]; then
     echo "Package not found: ${ZIP}"
     exit 1
