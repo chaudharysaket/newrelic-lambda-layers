@@ -6,7 +6,7 @@ RUN apt-get update \
 RUN useradd -m newrelic-lambda-layers
 USER newrelic-lambda-layers
 WORKDIR /home/newrelic-lambda-layers
-RUN mkdir /home/newrelic-lambda-layers/nr-env-vars
+RUN mkdir /home/runner/work/newrelic-lambda-layers/nr-env-vars
 
 COPY --chown=newrelic-lambda-layers libBuild.sh .
 COPY --chown=newrelic-lambda-layers nodejs nodejs/
