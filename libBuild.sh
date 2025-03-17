@@ -270,7 +270,7 @@ function publish_layer {
    else arch_flag=""
    fi
 
-    if [[ $newrelic_agent_version != "none" ]]
+    if [[ $newrelic_agent_version != "none" ]]; then
     description="New Relic Layer for ${runtime_name} (${arch}) with New Relic Extension v${EXTENSION_VERSION} and ${agent_name} agent v${newrelic_agent_version}"
     else
     description="New Relic Layer for ${runtime_name} (${arch})."
