@@ -21,9 +21,11 @@ WORKDIR /home/newrelic-lambda-layers
 RUN pip3 install -U awscli --user
 ENV PATH /home/newrelic-lambda-layers/.local/bin/:$PATH
 
+RUN pwd
+RUN ls
 COPY libBuild.sh .
 COPY nodejs nodejs/
-COPY --from=builder /home/newrelic-lambda-layers/nodejs/dist nodejs/dist nodejs/nr-env-var
+COPY --from=builder /home/newrelic-lambda-layers/nodejs/dist nodejs/dist
 
 WORKDIR nodejs
 CMD ./publish-layers.sh publish-22
