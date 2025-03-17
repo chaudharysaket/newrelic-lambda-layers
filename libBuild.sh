@@ -4,55 +4,55 @@ set -Eeuo pipefail
 
 # Regions that support arm64 architecture
 REGIONS_ARM=(
-	af-south-1
-	ap-northeast-1
-	ap-northeast-2
-	ap-northeast-3
-	ap-south-1
-	ap-southeast-1
-	ap-southeast-2
-	ap-southeast-3
-	ca-central-1
-	eu-central-1
-	eu-north-1
-	eu-south-1
-	eu-west-1
-	eu-west-2
-	eu-west-3
-	me-south-1
-	sa-east-1
+	# af-south-1
+	# ap-northeast-1
+	# ap-northeast-2
+	# ap-northeast-3
+	# ap-south-1
+	# ap-southeast-1
+	# ap-southeast-2
+	# ap-southeast-3
+	# ca-central-1
+	# eu-central-1
+	# eu-north-1
+	# eu-south-1
+	# eu-west-1
+	# eu-west-2
+	# eu-west-3
+	# me-south-1
+	# sa-east-1
 	us-east-1
-	us-east-2
-	us-west-1
+	# us-east-2
+	# us-west-1
 	us-west-2
 )
 
 REGIONS_X86=(
-  af-south-1
-  ap-northeast-1
-  ap-northeast-2
-  ap-northeast-3
-  ap-south-1
-  ap-south-2
-  ap-southeast-1
-  ap-southeast-2
-  ap-southeast-3
-  ap-southeast-4
-  ca-central-1
-  eu-central-1
-  eu-central-2
-  eu-north-1
-  eu-south-1
-  eu-south-2
-  eu-west-1
-  eu-west-2
-  eu-west-3
-  me-central-1
-  me-south-1
-  sa-east-1
+  # af-south-1
+  # ap-northeast-1
+  # ap-northeast-2
+  # ap-northeast-3
+  # ap-south-1
+  # ap-south-2
+  # ap-southeast-1
+  # ap-southeast-2
+  # ap-southeast-3
+  # ap-southeast-4
+  # ca-central-1
+  # eu-central-1
+  # eu-central-2
+  # eu-north-1
+  # eu-south-1
+  # eu-south-2
+  # eu-west-1
+  # eu-west-2
+  # eu-west-3
+  # me-central-1
+  # me-south-1
+  # sa-east-1
   us-east-1
-  us-east-2
-  us-west-1
+  # us-east-2
+  # us-west-1
   us-west-2
 )
 
@@ -205,6 +205,32 @@ function s3_prefix() {
     echo $name
 }
 
+function agent_name_str() {
+    local runtime=$1
+    local agent_name
+   
+    case $runtime in
+        "nodejs20.x"|"nodejs22.x"|"nodejs18.x")
+            agent_name="Node"
+            ;;
+        "ruby3.2"|"ruby3.3")
+            agent_name="Ruby"
+            ;;
+        "java8.al2"|"java11"|"java17"|"java21")
+            agent_name="Java"
+            ;;
+        "python3.8"|"python3.9"|"python3.10"|"python3.11"|"python3.12"|"python3.13")
+            agent_name="Python"
+            ;;
+        *)
+            echo "Unsupported runtime: $runtime"
+            return ""
+            ;;
+    esac
+
+    echo $agent_name
+}
+
 function hash_file() {
     if command -v md5sum &> /dev/null ; then
         md5sum $1 | awk '{ print $1 }'
@@ -218,12 +244,13 @@ function publish_layer {
     region=$2
     runtime_name=$3
     arch=$4
-
+    newrelic_agent_version=${5:-none}
+    agent_name=$( agent_name_str $runtime_name )
     layer_name=$( layer_name_str $runtime_name $arch )
 
     hash=$( hash_file $layer_archive | awk '{ print $1 }' )
 
-    bucket_name="nr-layers-${region}"
+    bucket_name="nr-test-saket-layers-${region}"
     s3_key="$( s3_prefix $runtime_name )/${hash}.${arch}.zip"
 
     compat_list=( $runtime_name )
@@ -243,11 +270,17 @@ function publish_layer {
    else arch_flag=""
    fi
 
+    if [[ $newrelic_agent_version != "none" ]]
+    description="New Relic Layer for ${runtime_name} (${arch}) with New Relic Extension v${EXTENSION_VERSION} and ${agent_name} agent v${newrelic_agent_version}"
+    else
+    description="New Relic Layer for ${runtime_name} (${arch})."
+    fi
+
     echo "Publishing ${runtime_name} layer to ${region}"
     layer_version=$(aws lambda publish-layer-version \
       --layer-name ${layer_name} \
       --content "S3Bucket=${bucket_name},S3Key=${s3_key}" \
-      --description "New Relic Layer for ${runtime_name} (${arch})" \
+      --description $description\
       --license-info "Apache-2.0" $arch_flag \
       --compatible-runtimes ${compat_list[*]} \
       --region "$region" \
@@ -306,7 +339,7 @@ function publish_docker_ecr {
 
     # public ecr repository name 
     # maintainer can use this("q6k3q1g1") repo name for testing 
-    repository="x6n7b2o2"
+    repository="q6k3q1g1"
 
     # copy dockerfile
     cp ../Dockerfile.ecrImage .

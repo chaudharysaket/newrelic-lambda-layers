@@ -4,7 +4,7 @@ set -Eeuo pipefail
 
 BUILD_DIR=python
 DIST_DIR=dist
-
+NEWRELIC_AGENT_VERSION=""
 PY38_DIST_ARM64=$DIST_DIR/python38.arm64.zip
 PY39_DIST_ARM64=$DIST_DIR/python39.arm64.zip
 PY310_DIST_ARM64=$DIST_DIR/python310.arm64.zip
@@ -31,6 +31,8 @@ function build-python38-arm64 {
     rm -rf $BUILD_DIR $PY38_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.8/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -45,6 +47,8 @@ function build-python38-x86 {
     rm -rf $BUILD_DIR $PY38_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.8/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -61,7 +65,7 @@ function publish-python38-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY38_DIST_ARM64 $region python3.8 arm64
+      publish_layer $PY38_DIST_ARM64 $region python3.8 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -72,7 +76,7 @@ function publish-python38-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY38_DIST_X86_64 $region python3.8 x86_64
+      publish_layer $PY38_DIST_X86_64 $region python3.8 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -81,6 +85,8 @@ function build-python39-arm64 {
     rm -rf $BUILD_DIR $PY39_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.9/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -95,6 +101,8 @@ function build-python39-x86 {
     rm -rf $BUILD_DIR $PY39_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.9/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -111,7 +119,7 @@ function publish-python39-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY39_DIST_ARM64 $region python3.9 arm64
+      publish_layer $PY39_DIST_ARM64 $region python3.9 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -122,7 +130,7 @@ function publish-python39-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY39_DIST_X86_64 $region python3.9 x86_64
+      publish_layer $PY39_DIST_X86_64 $region python3.9 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -131,6 +139,8 @@ function build-python310-arm64 {
     rm -rf $BUILD_DIR $PY310_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.10/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -145,6 +155,8 @@ function build-python310-x86 {
     rm -rf $BUILD_DIR $PY310_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.10/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -161,7 +173,7 @@ function publish-python310-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY310_DIST_ARM64 $region python3.10 arm64
+      publish_layer $PY310_DIST_ARM64 $region python3.10 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -172,7 +184,7 @@ function publish-python310-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY310_DIST_X86_64 $region python3.10 x86_64
+      publish_layer $PY310_DIST_X86_64 $region python3.10 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -181,6 +193,8 @@ function build-python311-arm64 {
     rm -rf $BUILD_DIR $PY311_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.11/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -195,6 +209,8 @@ function build-python311-x86 {
     rm -rf $BUILD_DIR $PY311_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.11/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -211,7 +227,7 @@ function publish-python311-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY311_DIST_ARM64 $region python3.11 arm64
+      publish_layer $PY311_DIST_ARM64 $region python3.11 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -222,7 +238,7 @@ function publish-python311-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY311_DIST_X86_64 $region python3.11 x86_64
+      publish_layer $PY311_DIST_X86_64 $region python3.11 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -231,6 +247,8 @@ function build-python312-arm64 {
     rm -rf $BUILD_DIR $PY312_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.12/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -245,6 +263,8 @@ function build-python312-x86 {
     rm -rf $BUILD_DIR $PY312_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.12/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -261,7 +281,7 @@ function publish-python312-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY312_DIST_ARM64 $region python3.12 arm64
+      publish_layer $PY312_DIST_ARM64 $region python3.12 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -272,7 +292,7 @@ function publish-python312-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY312_DIST_X86_64 $region python3.12 x86_64
+      publish_layer $PY312_DIST_X86_64 $region python3.12 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -281,6 +301,8 @@ function build-python313-arm64 {
     rm -rf $BUILD_DIR $PY313_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.13/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -295,6 +317,8 @@ function build-python313-x86 {
     rm -rf $BUILD_DIR $PY313_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.13/site-packages
+    NEWRELIC_AGENT_VERSION=$(pip show newrelic | grep Version | awk '{print $2}')
+    echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
@@ -311,7 +335,7 @@ function publish-python313-arm64 {
     fi
 
     for region in "${REGIONS_ARM[@]}"; do
-      publish_layer $PY313_DIST_ARM64 $region python3.13 arm64
+      publish_layer $PY313_DIST_ARM64 $region python3.13 arm64 $NEWRELIC_AGENT_VERSION
     done
 }
 
@@ -322,7 +346,7 @@ function publish-python313-x86 {
     fi
 
     for region in "${REGIONS_X86[@]}"; do
-      publish_layer $PY313_DIST_X86_64 $region python3.13 x86_64
+      publish_layer $PY313_DIST_X86_64 $region python3.13 x86_64 $NEWRELIC_AGENT_VERSION
     done
 }
 
