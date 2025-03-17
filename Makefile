@@ -95,7 +95,7 @@ publish-nodejs18-local: build-nodejs18
 		newrelic-lambda-layers-nodejs18
 
 build-nodejs20:
-	docker build \		
+	docker build \
 		--no-cache \
 		-t newrelic-lambda-layers-nodejs20 \
 		-f ./dockerfiles/Dockerfile.nodejs20 \
