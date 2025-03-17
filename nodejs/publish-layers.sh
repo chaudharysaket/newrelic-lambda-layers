@@ -4,7 +4,7 @@ set -Eeuo pipefail
 
 BUILD_DIR=nodejs
 DIST_DIR=dist
-
+NEWRELIC_AGENT_VERSION=""
 source ../libBuild.sh
 
 function usage {
@@ -28,9 +28,11 @@ function build_wrapper {
   rm -rf $BUILD_DIR $ZIP
   mkdir -p $DIST_DIR
   npm install --prefix $BUILD_DIR newrelic@latest
-	mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
+  NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR/node_modules | grep newrelic@ | awk -F '@' '{print $2}')
+  echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
+  mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
-	mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
+  mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
   cp esm.mjs $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/index.js
   make_package_json
   cp fake-package.json $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper/package.json
@@ -50,7 +52,7 @@ function publish_wrapper {
   fi
 
   for region in "${REGIONS_ARM[@]}"; do
-    publish_layer $ZIP $region nodejs${node_version}.x ${arch} 
+    publish_layer $ZIP $region nodejs${node_version}.x ${arch} $NEWRELIC_AGENT_VERSION
   done
 }
 
