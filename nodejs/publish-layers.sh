@@ -32,8 +32,9 @@ function build_wrapper {
   NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
   echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
   touch nr-env-var
-  pwd
   echo "NEWRELIC_AGENT_VERSION=$NEWRELIC_AGENT_VERSION" > nr-env-var
+  pwd
+  ls
   mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
