@@ -23,7 +23,7 @@ ENV PATH /home/newrelic-lambda-layers/.local/bin/:$PATH
 
 COPY libBuild.sh .
 COPY nodejs nodejs/
-COPY --from=builder /home/newrelic-lambda-layers/nodejs/dist nodejs/dist
+COPY --from=builder /home/newrelic-lambda-layers/nodejs/dist nodejs/dist nodejs/nr-env-var
 
 WORKDIR nodejs
 CMD ./publish-layers.sh publish-22
