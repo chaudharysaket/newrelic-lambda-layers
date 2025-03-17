@@ -28,6 +28,9 @@ function build_wrapper {
   rm -rf $BUILD_DIR $ZIP
   mkdir -p $DIST_DIR
   npm install --prefix $BUILD_DIR newrelic@latest
+  echo "Installed newrelic package"
+  NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
+  echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
   mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
