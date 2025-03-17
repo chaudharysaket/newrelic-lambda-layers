@@ -4,7 +4,7 @@ set -Eeuo pipefail
 
 BUILD_DIR=nodejs
 DIST_DIR=dist
-NEWRELIC_AGENT_VERSION=""
+
 source ../libBuild.sh
 
 function usage {
@@ -31,6 +31,9 @@ function build_wrapper {
   echo "Installed newrelic package"
   NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
   echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
+  {
+  echo "NEWRELIC_AGENT_VERSION=$NEWRELIC_AGENT_VERSION"
+  } > /nr-env-var
   mkdir -p $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   cp index.js $BUILD_DIR/node_modules/newrelic-lambda-wrapper
   mkdir -p $BUILD_DIR/node_modules/newrelic-esm-lambda-wrapper
