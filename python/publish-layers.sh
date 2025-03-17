@@ -31,7 +31,7 @@ function build-python38-arm64 {
     rm -rf $BUILD_DIR $PY38_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.8/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.8/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda
@@ -47,7 +47,7 @@ function build-python38-x86 {
     rm -rf $BUILD_DIR $PY38_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.8/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.8/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.8/site-packages/newrelic_lambda
@@ -85,7 +85,7 @@ function build-python39-arm64 {
     rm -rf $BUILD_DIR $PY39_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.9/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.9/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda
@@ -101,7 +101,7 @@ function build-python39-x86 {
     rm -rf $BUILD_DIR $PY39_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.9/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.9/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.9/site-packages/newrelic_lambda
@@ -139,7 +139,7 @@ function build-python310-arm64 {
     rm -rf $BUILD_DIR $PY310_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.10/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.10/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda
@@ -155,7 +155,7 @@ function build-python310-x86 {
     rm -rf $BUILD_DIR $PY310_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.10/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.10/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.10/site-packages/newrelic_lambda
@@ -193,7 +193,7 @@ function build-python311-arm64 {
     rm -rf $BUILD_DIR $PY311_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.11/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.11/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda
@@ -209,7 +209,7 @@ function build-python311-x86 {
     rm -rf $BUILD_DIR $PY311_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.11/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.11/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.11/site-packages/newrelic_lambda
@@ -247,7 +247,7 @@ function build-python312-arm64 {
     rm -rf $BUILD_DIR $PY312_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.12/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.12/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda
@@ -263,7 +263,7 @@ function build-python312-x86 {
     rm -rf $BUILD_DIR $PY312_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.12/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.12/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.12/site-packages/newrelic_lambda
@@ -301,7 +301,7 @@ function build-python313-arm64 {
     rm -rf $BUILD_DIR $PY313_DIST_ARM64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.13/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.13/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda
@@ -317,7 +317,7 @@ function build-python313-x86 {
     rm -rf $BUILD_DIR $PY313_DIST_X86_64
     mkdir -p $DIST_DIR
     pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python3.13/site-packages
-    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$NEWRELIC_PACKAGE_DIR pip show newrelic | grep Version | awk '{print $2}')
+    NEWRELIC_AGENT_VERSION=$(PYTHONPATH=$BUILD_DIR/lib/python3.13/site-packages pip show newrelic | grep Version | awk '{print $2}')
     echo "Installed New Relic version: $NEWRELIC_AGENT_VERSION"
     cp newrelic_lambda_wrapper.py $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda_wrapper.py
     cp -r newrelic_lambda $BUILD_DIR/lib/python3.13/site-packages/newrelic_lambda
