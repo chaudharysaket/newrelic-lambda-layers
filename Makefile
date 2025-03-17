@@ -85,7 +85,7 @@ publish-nodejs18-ci: build-nodejs18
 	pwd
 	ls
 	docker run \
-		--env-file /home/nr-env-vars/env \
+		--env-file /home/newrelic-lambda-layers/nr-env-vars/env \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
 		newrelic-lambda-layers-nodejs18
@@ -107,7 +107,7 @@ publish-nodejs20-ci: build-nodejs20
 	pwd
 	ls
 	docker run \
-		--env-file /home/nr-env-vars/env \
+		--env-file /home/newrelic-lambda-layers/nr-env-vars/env \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
 		newrelic-lambda-layers-nodejs20
@@ -129,7 +129,7 @@ publish-nodejs22-ci: build-nodejs22
 	pwd
 	ls
 	docker run \
-		--env-file /home/nr-env-vars/env \
+		--env-file /home/newrelic-lambda-layers/nr-env-vars/env \
 		-e AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY \
 		newrelic-lambda-layers-nodejs22
