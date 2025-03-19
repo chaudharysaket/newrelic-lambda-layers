@@ -211,7 +211,7 @@ function agent_name_str() {
    
     case $runtime in
         "provided")
-            agent_name="Provided"
+            agent_name="provided"
             ;;
         "nodejs18.x"|"nodejs20.x"|"nodejs22.x")
             agent_name="Node"
