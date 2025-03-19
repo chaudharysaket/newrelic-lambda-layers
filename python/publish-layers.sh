@@ -28,40 +28,47 @@ function usage {
 function build_python_layer {
     local python_version=$1
     local arch=$2
-    local dist_var="PY${python_version//./}_DIST_${arch^^}"
+    ZIP=$DIST_DIR/python${python_version}.${arch}.zip
 
     echo "Building New Relic layer for python${python_version} (${arch})"
-    rm -rf $BUILD_DIR ${!dist_var}
+    rm -rf $BUILD_DIR $ZIP
     mkdir -p $DIST_DIR
 
-    pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/${python_version}/site-packages
+    pip install --no-cache-dir -qU newrelic -t $BUILD_DIR/lib/python${python_version}/site-packages
     NEWRELIC_AGENT_VERSION=$(PYTHONPATH="$BUILD_DIR/lib/python${python_version}/site-packages" pip show newrelic | grep Version | awk '{print $2}')
     cp newrelic_lambda_wrapper.py "$BUILD_DIR/lib/python${python_version}/site-packages/newrelic_lambda_wrapper.py"
     cp -r newrelic_lambda "$BUILD_DIR/lib/python${python_version}/site-packages/newrelic_lambda"
     find $BUILD_DIR -name '__pycache__' -exec rm -rf {} +
     
     download_extension $arch
-    zip -rq ${!dist_var} $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
+    zip -rq $ZIP $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
     rm -rf $BUILD_DIR $EXTENSION_DIST_DIR $EXTENSION_DIST_PREVIEW_FILE
 
-    echo "Build complete: ${!dist_var}"
+    echo "Build complete: ${ZIP}"
 }
 
 
 function publish_python_layer {
     local python_version=$1
     local arch=$2
-    local regions_var="REGIONS_${arch^^}"
-    local dist_var="PY${python_version//./}_DIST_${arch^^}"
+    ZIP=$DIST_DIR/python${python_version}.${arch}.zip
 
-    if [ ! -f ${!dist_var} ]; then
-        echo "Package not found: ${!dist_var}"
+    if [ ! -f ${ZIP} ]; then
+        echo "Package not found: ${ZIP}"
         exit 1
     fi
-
-    for region in "${!regions_var[@]}"; do
-      publish_layer ${!dist_var} $region python${python_version} ${arch} $NEWRELIC_AGENT_VERSION
-    done
+    if [arch == "arm64"]; then
+        for region in "${REGIONS_ARM[@]}"; do
+            echo "Publishing layer for python${python_version} (${arch}) to region ${region}"
+            publish_layer ${ZIP} $region python${python_version} ${arch} $NEWRELIC_AGENT_VERSION
+        done
+    else
+        for region in "${REGIONS_X86[@]}"; do
+            echo "Publishing layer for python${python_version} (${arch}) to region ${region}"
+            publish_layer ${ZIP} $region python${python_version} ${arch} $NEWRELIC_AGENT_VERSION
+        done
+    fi
+    
 }
 
 
