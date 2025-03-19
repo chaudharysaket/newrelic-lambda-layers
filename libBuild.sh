@@ -278,7 +278,7 @@ function publish_layer {
     if [[ $newrelic_agent_version != "none" ]]; then
         extension_info=" with New Relic Extension v${EXTENSION_VERSION}"
         
-        if [[ $agent_name != "Provided" ]]; then
+        if [[ $agent_name != "provided" ]]; then
             agent_info=" and ${agent_name} agent v${newrelic_agent_version}"
         else
             base_description="New Relic Layer for OS only runtime (${arch})"
