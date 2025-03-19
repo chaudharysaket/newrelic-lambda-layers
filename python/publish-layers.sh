@@ -28,8 +28,8 @@ function usage {
 function build_python_layer {
     local python_version=$1
     local arch=$2
-    ZIP=$DIST_DIR/python${python_version}.${arch}.zip
-
+    ZIP=$DIST_DIR/python${python_version//./}.${arch}.zip
+    echo "zip file: ${ZIP}"
     echo "Building New Relic layer for python${python_version} (${arch})"
     rm -rf $BUILD_DIR $ZIP
     mkdir -p $DIST_DIR
@@ -51,7 +51,7 @@ function build_python_layer {
 function publish_python_layer {
     local python_version=$1
     local arch=$2
-    ZIP=$DIST_DIR/python${python_version}.${arch}.zip
+    ZIP=$DIST_DIR/python${python_version//./}.${arch}.zip
 
     if [ ! -f ${ZIP} ]; then
         echo "Package not found: ${ZIP}"
