@@ -226,8 +226,7 @@ function agent_name_str() {
             agent_name="Python"
             ;;
         *)
-            echo "Unsupported runtime: $runtime"
-            return ""
+            agent_name="none"
             ;;
     esac
 
