@@ -49,8 +49,8 @@ REGIONS_X86=(
   # eu-west-3
   # me-central-1
   # me-south-1
-  sa-east-1
-  # us-east-1
+  # sa-east-1
+  us-east-1
   # us-east-2
   # us-west-1
   us-west-2
