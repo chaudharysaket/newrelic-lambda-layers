@@ -23,7 +23,7 @@ REGIONS_ARM=(
 	# sa-east-1
 	us-east-1
 	# us-east-2
-	# us-west-1
+	us-west-1
 	us-west-2
 )
 
@@ -52,7 +52,7 @@ REGIONS_X86=(
   # sa-east-1
   us-east-1
   # us-east-2
-  # us-west-1
+  us-west-1
   us-west-2
 )
 
