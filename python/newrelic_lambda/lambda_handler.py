@@ -194,12 +194,7 @@ def LambdaHandlerWrapper(wrapped, application=None, name=None, group=None):
         event_source = extract_event_source_arn(event)
         event_type = detect_event_type(event)
 
-        apm_lambda_mode = os.environ.get("NEW_RELIC_APM_LAMBDA_MODE", "false").lower()
-        if apm_lambda_mode == "true":
-            trigger = event_type["name"].upper() + " " if event_type else ""
-            transaction_name = trigger + getattr(context, "function_name", None)
-        else:
-            transaction_name = name or getattr(context, "function_name", None)
+        transaction_name = name or getattr(context, "function_name", None)
 
         transaction = newrelic.agent.WebTransaction(
             target_application,
