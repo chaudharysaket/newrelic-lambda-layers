@@ -105,6 +105,7 @@ function build_ruby_for_arch {
   bundle install
 
   local base_dir="$RUBY_DIR/gems/$ruby_version.0"
+  local version_dir="$RUBY_DIR/gems"
 
   # Bundler will have created ./ruby/<RUBY VERSION USED TO BUNDLE>/gems
   # AWS wants ./ruby/gems/<RUBY VERSION FOR LAMBDA RUNTIME>
@@ -132,6 +133,9 @@ function build_ruby_for_arch {
     local phony_version=$(date +'%s')
     mkdir -p $base_dir/gems # dir will exist if non-agent, non-dev gems are in Gemfile
     local nr_dir=$base_dir/gems/newrelic_rpm-$phony_version
+    echo "RUBY AGENT VERSION $phony_version"
+    echo "$phony_version" > version.txt
+    cp version.txt $version_dir/version.txt
     mv $base_dir/bundler/gems/newrelic-ruby-agent* $nr_dir
     rm -rf $base_dir/bundler
     mkdir $base_dir/specifications
