@@ -90,8 +90,8 @@ function get_agent {
     rm -rf $AGENT_DIST_ZIP
     curl -L $url -o $AGENT_DIST_ZIP
     mkdir -p $BUILD_DIR
-    cp version.txt $BUILD_DIR/newrelic-dotnet-agent/version.txt
     tar -xvf $AGENT_DIST_ZIP -C ./$BUILD_DIR # under $BUILD_DIR/newrelic-dotnet-agent
+    cp version.txt $BUILD_DIR/newrelic-dotnet-agent/version.txt
     rm -f $AGENT_DIST_ZIP
 }
 
