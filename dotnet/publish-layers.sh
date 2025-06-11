@@ -80,7 +80,6 @@ function get_agent {
         # Extract the version number from the GITHUB_REF_NAME using regex
         NEWRELIC_AGENT_VERSION="${BASH_REMATCH[1]}"
         echo "$NEWRELIC_AGENT_VERSION" > version.txt
-        pwd
         echo "Detected NEWRELIC_DOTNET_AGENT_VERSION: ${NEWRELIC_AGENT_VERSION}"
     else
         echo "Unable to determine Dotnet agent version, GITHUB_REF_NAME environment variable did not match regex. GITHUB_REF_NAME: ${GITHUB_REF_NAME}" >&2
@@ -91,7 +90,7 @@ function get_agent {
     rm -rf $AGENT_DIST_ZIP
     curl -L $url -o $AGENT_DIST_ZIP
     mkdir -p $BUILD_DIR
-    cp version.txt $BUILD_DIR/version.txt
+    cp version.txt $BUILD_DIR/newrelic-dotnet-agent/version.txt
     tar -xvf $AGENT_DIST_ZIP -C ./$BUILD_DIR # under $BUILD_DIR/newrelic-dotnet-agent
     rm -f $AGENT_DIST_ZIP
 }
