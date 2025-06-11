@@ -13,7 +13,7 @@ REGIONS_ARM=(
 	# ap-southeast-2
 	# ap-southeast-3
 	# ca-central-1
-	# eu-central-1
+	eu-central-1
 	# eu-north-1
 	# eu-south-1
 	eu-west-1
@@ -39,7 +39,7 @@ REGIONS_X86=(
   # ap-southeast-3
   # ap-southeast-4
   # ca-central-1
-  # eu-central-1
+  eu-central-1
   # eu-central-2
   # eu-north-1
   # eu-south-1
