@@ -13,18 +13,18 @@ REGIONS_ARM=(
 	# ap-southeast-2
 	# ap-southeast-3
 	# ca-central-1
-	# eu-central-1
-	# eu-north-1
-	# eu-south-1
-	# eu-west-1
-	# eu-west-2
-	# eu-west-3
-	# me-south-1
-	# sa-east-1
-	us-east-1
-	us-east-2
-	us-west-1
-	us-west-2
+	eu-central-1
+	# # eu-north-1
+	# # eu-south-1
+	# # eu-west-1
+	# # eu-west-2
+	# # eu-west-3
+	# # me-south-1
+	# # sa-east-1
+	# us-east-1
+	# us-east-2
+	# us-west-1
+	# us-west-2
 )
 
 REGIONS_X86=(
@@ -39,7 +39,7 @@ REGIONS_X86=(
   # ap-southeast-3
   # ap-southeast-4
   # ca-central-1
-  # eu-central-1
+  eu-central-1
   # eu-central-2
   # eu-north-1
   # eu-south-1
@@ -50,17 +50,17 @@ REGIONS_X86=(
   # me-central-1
   # me-south-1
   # sa-east-1
-  us-east-1
-  us-east-2
-  us-west-1
-  us-west-2
+  # us-east-1
+  # us-east-2
+  # us-west-1
+  # us-west-2
 )
 
 EXTENSION_DIST_DIR=extensions
 EXTENSION_DIST_ZIP=extension.zip
 EXTENSION_DIST_PREVIEW_FILE=preview-extensions-ggqizro707
 
-EXTENSION_VERSION=2.3.21
+EXTENSION_VERSION=2.3.22
 
 function list_all_regions {
     aws ec2 describe-regions \
