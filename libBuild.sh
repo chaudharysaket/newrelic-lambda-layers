@@ -21,10 +21,10 @@ REGIONS_ARM=(
 	# # eu-west-3
 	# # me-south-1
 	# # sa-east-1
-	# us-east-1
-	# us-east-2
-	# us-west-1
-	# us-west-2
+	us-east-1
+	us-east-2
+	us-west-1
+	us-west-2
 )
 
 REGIONS_X86=(
@@ -50,10 +50,10 @@ REGIONS_X86=(
   # me-central-1
   # me-south-1
   # sa-east-1
-  # us-east-1
-  # us-east-2
-  # us-west-1
-  # us-west-2
+  us-east-1
+  us-east-2
+  us-west-1
+  us-west-2
 )
 
 EXTENSION_DIST_DIR=extensions
@@ -72,7 +72,7 @@ function list_all_regions {
 function fetch_extension {
     arch=$1
 
-    url="https://github.com/chaudharysaket/newrelic-lambda-extension/releases/download/v${EXTENSION_VERSION}/newrelic-lambda-extension.${arch}.zip"
+    url="https://github.com/newrelic/newrelic-lambda-extension/releases/download/v${EXTENSION_VERSION}/newrelic-lambda-extension.${arch}.zip"
     rm -rf $EXTENSION_DIST_DIR $EXTENSION_DIST_ZIP
     curl -L $url -o $EXTENSION_DIST_ZIP
 }
