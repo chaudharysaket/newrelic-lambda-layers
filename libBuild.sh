@@ -206,6 +206,40 @@ function hash_file() {
         md5 -q $1
     fi
 }
+function publish_public_layer {
+  layer_name=$1
+  bucket_name=$2
+  s3_key=$3
+  description=$4
+  arch_flag=$5
+  region=$6
+  runtime_name=$7
+  compat_list=("${@:8}")
+
+
+  layer_version=$(aws lambda publish-layer-version \
+    --layer-name ${layer_name} \
+    --content "S3Bucket=${bucket_name},S3Key=${s3_key}" \
+    --description "${description}"\
+    --license-info "Apache-2.0" $arch_flag \
+    --compatible-runtimes ${compat_list[*]} \
+    --region "$region" \
+    --output text \
+    --query Version)
+  echo "Published ${runtime_name} layer version ${layer_version} to ${region}"
+
+  echo "Setting public permissions for ${runtime_name} layer version ${layer_version} in ${region}"
+  aws lambda add-layer-version-permission \
+    --layer-name ${layer_name} \
+    --version-number "$layer_version" \
+    --statement-id public \
+    --action lambda:GetLayerVersion \
+    --principal "*" \
+    --region "$region"
+  echo "Public permissions set for ${runtime_name} layer version ${layer_version} in region ${region}"
+
+}
+
 
 function publish_layer {
     layer_archive=$1
@@ -256,26 +290,14 @@ function publish_layer {
     fi
 
     echo "Publishing ${runtime_name} layer to ${region}"
-    layer_version=$(aws lambda publish-layer-version \
-      --layer-name ${layer_name} \
-      --content "S3Bucket=${bucket_name},S3Key=${s3_key}" \
-      --description "${description}"\
-      --license-info "Apache-2.0" $arch_flag \
-      --compatible-runtimes ${compat_list[*]} \
-      --region "$region" \
-      --output text \
-      --query Version)
-    echo "Published ${runtime_name} layer version ${layer_version} to ${region}"
-
-    echo "Setting public permissions for ${runtime_name} layer version ${layer_version} in ${region}"
-    aws lambda add-layer-version-permission \
-      --layer-name ${layer_name} \
-      --version-number "$layer_version" \
-      --statement-id public \
-      --action lambda:GetLayerVersion \
-      --principal "*" \
-      --region "$region"
-    echo "Public permissions set for ${runtime_name} layer version ${layer_version} in region ${region}"
+    publish_public_layer $layer_name $bucket_name $s3_key "$description" "$arch_flag" "$region" "$runtime_name" "${compat_list[@]}"
+    if [[ runtime_name == "nodejs20.x" || runtime_name == "nodejs22.x" ]]; then
+        echo "Publishing ${runtime_name} slim layer to ${region}"
+        layer_name="${layer_name}-slim"
+        base_description="New Relic Slim Layer for ${runtime_name} (${arch})"
+        description="${base_description}${extension_info}${agent_info}"
+        publish_public_layer $layer_name $bucket_name $s3_key "$description" "$arch_flag" "$region" "$runtime_name" "${compat_list[@]}"
+    fi
 
 }
 
