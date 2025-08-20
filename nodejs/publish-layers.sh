@@ -31,12 +31,10 @@ function build_wrapper {
   fi
   rm -rf $BUILD_DIR $ZIP
   mkdir -p $DIST_DIR
-  # npm install --prefix $BUILD_DIR newrelic@latest
-  npm --install-strategy=nested --prefix $BUILD_DIR newrelic@latest 
+  npm install --prefix $BUILD_DIR newrelic@latest
   if [ "$slim" == "slim" ]; then
     echo "Slim build, removing opentelemetry dependencies"
     rm -rf $BUILD_DIR/node_modules/@opentelemetry
-    rm -rf $BUILD_DIR/node_modules/newrelic/lib/otel
   fi
   NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
   touch $DIST_DIR/nr-env
@@ -93,15 +91,15 @@ case "$1" in
   publish_wrapper 20 x86_64 slim
 	;;
 "build-22")
-  build_wrapper 22 arm64 
-  build_wrapper 22 x86_64 
-  build_wrapper 22 arm64 slim
+  # build_wrapper 22 arm64 
+  # build_wrapper 22 x86_64 
+  # build_wrapper 22 arm64 slim
   build_wrapper 22 x86_64 slim
 	;;
 "publish-22")
-  publish_wrapper 22 arm64
-  publish_wrapper 22 x86_64 
-  publish_wrapper 22 arm64 slim
+  # publish_wrapper 22 arm64
+  # publish_wrapper 22 x86_64 
+  # publish_wrapper 22 arm64 slim
   publish_wrapper 22 x86_64 slim
 	;;
 "build-publish-20-ecr-image")
