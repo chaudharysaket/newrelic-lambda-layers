@@ -91,15 +91,15 @@ case "$1" in
   publish_wrapper 20 x86_64 slim
 	;;
 "build-22")
-  # build_wrapper 22 arm64 
-  # build_wrapper 22 x86_64 
-  # build_wrapper 22 arm64 slim
+  build_wrapper 22 arm64 
+  build_wrapper 22 x86_64 
+  build_wrapper 22 arm64 slim
   build_wrapper 22 x86_64 slim
 	;;
 "publish-22")
-  # publish_wrapper 22 arm64
-  # publish_wrapper 22 x86_64 
-  # publish_wrapper 22 arm64 slim
+  publish_wrapper 22 arm64
+  publish_wrapper 22 x86_64 
+  publish_wrapper 22 arm64 slim
   publish_wrapper 22 x86_64 slim
 	;;
 "build-publish-20-ecr-image")
