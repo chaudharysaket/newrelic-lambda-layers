@@ -35,6 +35,7 @@ function build_wrapper {
   if [ "$slim" == "slim" ]; then
     echo "Slim build, removing opentelemetry dependencies"
     rm -rf $BUILD_DIR/node_modules/@opentelemetry
+    rm -rf $BUILD_DIR/node_modules/newrelic/lib/otel
   fi
   NEWRELIC_AGENT_VERSION=$(npm list newrelic --prefix $BUILD_DIR | grep newrelic@ | awk -F '@' '{print $2}')
   touch $DIST_DIR/nr-env
