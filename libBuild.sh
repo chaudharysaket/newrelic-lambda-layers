@@ -330,6 +330,10 @@ function publish_docker_ecr {
     version_flag=""
     arch_flag=${arch}
     fi
+    slim_flag=""
+    if [ "$slim" == "slim" ]; then
+        slim_flag="-slim"
+    fi
 
     # Remove 'dist/' prefix
     if [[ $layer_archive == dist/* ]]; then
@@ -362,10 +366,10 @@ function publish_docker_ecr {
     --build-arg file_without_dist=${file_without_dist} \
     .
 
-    echo "docker tag layer-nr-image-${language_flag}-${version_flag}${arch_flag}${slim}:latest public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}:${version_flag}${arch_flag}"
-    docker tag layer-nr-image-${language_flag}-${version_flag}${arch_flag}${slim}:latest public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}-${slim}:${version_flag}${arch_flag}
-    echo "docker push public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}-${slim}:${version_flag}${arch_flag}"
-    docker push public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}-${slim}:${version_flag}${arch_flag}
+    echo "docker tag layer-nr-image-${language_flag}-${version_flag}${arch_flag}${slim}:latest public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}${slim_flag}:${version_flag}${arch_flag}"
+    docker tag layer-nr-image-${language_flag}-${version_flag}${arch_flag}${slim}:latest public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}${slim_flag}:${version_flag}${arch_flag}
+    echo "docker push public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}${slim_flag}:${version_flag}${arch_flag}"
+    docker push public.ecr.aws/${repository}/newrelic-lambda-layers-${language_flag}${slim_flag}:${version_flag}${arch_flag}
 
     # delete dockerfile
     rm -rf Dockerfile.ecrImage
