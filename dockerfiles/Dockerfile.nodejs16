@@ -1,7 +1,6 @@
 FROM node:16 as builder
 
-RUN apt-get update \
-    && apt-get install -y curl unzip zip
+RUN apt-get install -y curl unzip zip
 
 RUN useradd -m newrelic-lambda-layers
 USER newrelic-lambda-layers
